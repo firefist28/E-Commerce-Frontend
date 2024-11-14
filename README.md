@@ -1,5 +1,6 @@
 # E-Commerce-Frontend
 A responsive and user-friendly e-commerce frontend built with React.
+Note: This project is currently under active development with ongoing updates for further improvements and completion.
 
 Getting Started
 Follow these steps to set up and run the project locally:
