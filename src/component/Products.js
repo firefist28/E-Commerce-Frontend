@@ -15,13 +15,18 @@ const Products = () => {
     }
 
     const deleteProduct = async (id) => {
-        let result = await fetch('http://localhost:5000/product/${id}', {
+        console.warn('Product id ', id);
+        //` is used for string interpolation to make id take the parameter value
+        let result = await fetch(`http://localhost:5000/product/${id}`, {
             method: 'delete'
         });
 
         result = await result.json();
         if (result) {
             alert('Record Deleted');
+
+            // After deletion, update the product list (optional)
+            getProducts();
         }
     }
 
