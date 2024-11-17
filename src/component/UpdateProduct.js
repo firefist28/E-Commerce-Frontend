@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UpdateProduct = () => {
 
@@ -10,9 +11,37 @@ const UpdateProduct = () => {
     const [error, setError] = useState(false);
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     const navigate = useNavigate();
+    const params = useParams();
+
+    useEffect(() => {
+        getProductDetails();
+    }, [])
+
+    const getProductDetails = async () => {
+        let result = await fetch(`http://localhost:5000/product/${params.id}`);
+        result = await result.json();
+        setName(result.name);
+        setPrice(result.price);
+        setCategory(result.category);
+        setCompany(result.company);
+    }
 
     const updateData = async () => {
         console.warn(name, price, category, company);
+        let result = await fetch(`http://localhost:5000/updateProduct/${params.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ name, price, category, company }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        result = await result.json();
+        if (result) {
+            alert('Product Updated');
+            console.warn(result);
+            navigate('/');
+        }
     }
 
     return (
