@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AxiosInstance from '../api/AxiosInstance';
+import Products from './Products';
 
 const AddProduct = () => {
 
@@ -17,22 +19,18 @@ const AddProduct = () => {
             return false;
         }
 
-        let result = await fetch('http://localhost:5000/addProduct', {
-            method: 'post',
-            body: JSON.stringify({ name, price, category, company, userId }),
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            let result = await AxiosInstance.post('/addProduct', { name, price, category, company, userId });
+            console.warn(result);
+
+            if (result) {
+                alert('Product Added Successfully');
+                navigate('/');
             }
-        });
+        } catch (error) {
+            console.error('Error Fetching data ' + error);
 
-        result = await result.json();
-        console.warn(result);
-
-        if (result) {
-            alert('Product Added Successfully');
-            navigate('/');
         }
-
     }
 
     return (
