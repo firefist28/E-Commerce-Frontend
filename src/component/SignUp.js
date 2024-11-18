@@ -32,7 +32,8 @@ const SignUp = () => {
 
         if (result) {
             navigate('/');
-            localStorage.setItem('user', JSON.stringify(result));
+            localStorage.setItem('auth', JSON.stringify(result.auth));
+            localStorage.setItem('user', JSON.stringify(result.user));
         }
     }
 
