@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AxiosInstance from '../api/AxiosInstance';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -8,43 +9,42 @@ const Products = () => {
     }, [])
 
     const getProducts = async () => {
-        let results = await fetch('http://localhost:5000/getProducts');
-        results = await results.json();
+        try {
+            let results = await AxiosInstance.get('/getProducts');
+            console.warn('results from getProducts ' + results)
 
-        setProducts(results);
-        console.warn("products ", products);
+            setProducts(results.data);
+        } catch (error) {
+            console.error('Error Fetching data ' + error);
+        }
     }
 
     const deleteProduct = async (id) => {
         console.warn('Product id ', id);
         //` is used for string interpolation to make id take the parameter value
-        let result = await fetch(`http://localhost:5000/product/${id}`, {
-            method: 'delete'
-        });
-
-        result = await result.json();
-        if (result) {
+        try {
+            await AxiosInstance.delete(`/product/${id}`);
             alert('Record Deleted');
-
-            // After deletion, update the product list (optional)
             getProducts();
+        } catch (error) {
+            console.error('Error Fetching data ' + error);
         }
     }
 
     const searchHandle = async (event) => {
         let key = event.target.value;
         if (key) {
-            let results = await fetch(`http://localhost:5000/search/${key}`);
-            results = await results.json();
-            if (results) {
-                setProducts(results);
-            } else {
-
+            try {
+                let results = await AxiosInstance.get(`/search/${key}`);
+                if (results.data) {
+                    setProducts(results.data);
+                }
+            } catch (error) {
+                console.error('Error Fetching data ' + error);
             }
         } else {
             getProducts();
         }
-
     }
 
     return (

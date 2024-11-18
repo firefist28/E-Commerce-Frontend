@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import AxiosInstance from '../api/AxiosInstance';
 
 const UpdateProduct = () => {
 
@@ -18,29 +19,29 @@ const UpdateProduct = () => {
     }, [])
 
     const getProductDetails = async () => {
-        let result = await fetch(`http://localhost:5000/product/${params.id}`);
-        result = await result.json();
-        setName(result.name);
-        setPrice(result.price);
-        setCategory(result.category);
-        setCompany(result.company);
+        try {
+            let result = await AxiosInstance.get(`/product/${params.id}`);
+            setName(result.data.name);
+            setPrice(result.data.price);
+            setCategory(result.data.category);
+            setCompany(result.data.company);
+        }
+        catch (error) {
+            console.error('Error Fetching data ' + error);
+        }
     }
 
     const updateData = async () => {
         console.warn(name, price, category, company);
-        let result = await fetch(`http://localhost:5000/updateProduct/${params.id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ name, price, category, company }),
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            let result = await AxiosInstance.put(`/updateProduct/${params.id}`, { name, price, category, company });
+            if (result) {
+                alert('Product Updated');
+                console.warn(result);
+                navigate('/');
             }
-        });
-
-        result = await result.json();
-        if (result) {
-            alert('Product Updated');
-            console.warn(result);
-            navigate('/');
+        } catch (error) {
+            console.error('Error Fetching data ' + error);
         }
     }
 
