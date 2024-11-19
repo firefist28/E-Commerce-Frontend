@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AxiosInstance from '../api/AxiosInstance';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Pagination } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 const Products = () => {
     const [currentPage, setCurrentPage] = useState(1); // Current page
@@ -32,10 +33,11 @@ const Products = () => {
         //` is used for string interpolation to make id take the parameter value
         try {
             await AxiosInstance.delete(`/product/${id}`);
-            alert('Record Deleted');
+            toast.success('Product Deleted!');
             getProducts(currentPage);
         } catch (error) {
             console.error('Error Fetching data ' + error);
+            toast.error('Failed to delete Product. Please try again');
         }
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -28,9 +29,10 @@ const Login = () => {
         if (result.auth) {
             localStorage.setItem('user', JSON.stringify(result.user));
             localStorage.setItem('auth', JSON.stringify(result.auth));
+            toast.success('Welcome ' + result.user.name);
             navigate('/');
         } else {
-            alert('Email or password incorrect');
+            toast.error('Email or password incorrect');
         }
     }
 
