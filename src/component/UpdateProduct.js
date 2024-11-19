@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import AxiosInstance from '../api/AxiosInstance';
+import { toast } from 'react-toastify';
 
 const UpdateProduct = () => {
 
@@ -36,12 +37,13 @@ const UpdateProduct = () => {
         try {
             let result = await AxiosInstance.put(`/updateProduct/${params.id}`, { name, price, category, company });
             if (result) {
-                alert('Product Updated');
+                toast.success('Product Updated Successfully!');
                 console.warn(result);
                 navigate('/');
             }
         } catch (error) {
             console.error('Error Fetching data ' + error);
+            toast.error('Failed to update the Product. Please try again.');
         }
     }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AxiosInstance from '../api/AxiosInstance';
 import Products from './Products';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
 
@@ -24,12 +25,12 @@ const AddProduct = () => {
             console.warn(result);
 
             if (result) {
-                alert('Product Added Successfully');
+                toast.success('Product Added Successfully!');
                 navigate('/');
             }
         } catch (error) {
             console.error('Error Fetching data ' + error);
-
+            toast.error('Failed to add the Product. Please try again.');
         }
     }
 
