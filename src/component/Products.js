@@ -12,9 +12,9 @@ const Products = () => {
     const getProducts = async () => {
         try {
             let results = await AxiosInstance.get('/getProducts');
-            console.warn('results from getProducts ' + results)
+            console.warn('results from getProducts ' + results.data.data)
 
-            setProducts(results.data);
+            setProducts(results.data.data);
         } catch (error) {
             console.error('Error Fetching data ' + error);
         }
