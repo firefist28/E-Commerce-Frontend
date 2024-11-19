@@ -34,26 +34,83 @@ const AddProduct = () => {
     }
 
     return (
-        < div className="register">
-            <h1>Add Product</h1>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="card shadow">
+                        <div className="card-header bg-success text-white">
+                            <h4 className="text-center">Add Product</h4>
+                        </div>
+                        <div className="card-body">
+                            <form>
+                                {/* Product Name */}
+                                <div className="mb-3">
+                                    <label className="form-label">Product Name</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control ${error && !name ? "is-invalid" : ""}`}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="Enter Product Name"
+                                    />
+                                    {error && !name && <div className="invalid-feedback">Name cannot be empty</div>}
+                                </div>
 
-            <div >
-                <input className="inputBox" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Product Name" />
-                {error && !name && <span className='invalidInput'>Name cannot be empty</span>}
+                                {/* Product Price */}
+                                <div className="mb-3">
+                                    <label className="form-label">Price</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control ${error && !price ? "is-invalid" : ""}`}
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        placeholder="Enter Price"
+                                    />
+                                    {error && !price && <div className="invalid-feedback">Price cannot be empty</div>}
+                                </div>
 
-                <input className="inputBox" value={price} onChange={(e) => setPrice(e.target.value)} type="text" placeholder="Enter Price" />
-                {error && !price && <span className='invalidInput'>Price cannot be empty</span>}
+                                {/* Product Category */}
+                                <div className="mb-3">
+                                    <label className="form-label">Category</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control ${error && !category ? "is-invalid" : ""}`}
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        placeholder="Enter Category"
+                                    />
+                                    {error && !category && <div className="invalid-feedback">Category cannot be empty</div>}
+                                </div>
 
-                <input className="inputBox" value={category} onChange={(e) => setCategory(e.target.value)} type="text" placeholder="Enter Category" />
-                {error && !category && <span className='invalidInput'>Category cannot be empty</span>}
+                                {/* Product Company */}
+                                <div className="mb-3">
+                                    <label className="form-label">Company</label>
+                                    <input
+                                        type="text"
+                                        className={`form-control ${error && !company ? "is-invalid" : ""}`}
+                                        value={company}
+                                        onChange={(e) => setCompany(e.target.value)}
+                                        placeholder="Enter Company"
+                                    />
+                                    {error && !company && <div className="invalid-feedback">Company Name cannot be empty</div>}
+                                </div>
 
-                <input className="inputBox" value={company} onChange={(e) => setCompany(e.target.value)} type="text" placeholder="Enter Company" />
-                {error && !company && <span className='invalidInput'>Company Name cannot be empty</span>}
-
-                <button className="appButton" onClick={addData} type="button">Add Product</button>
-
+                                {/* Submit Button */}
+                                <div className="d-grid">
+                                    <button
+                                        type="button"
+                                        className="btn btn-success"
+                                        onClick={addData}
+                                    >
+                                        Add Product
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div >
+        </div>
 
     )
 }

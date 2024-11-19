@@ -35,11 +35,37 @@ const Login = () => {
     }
 
     return (
-        < div className='login'>
-            <h1>Login</h1>
-            <input type='text' className="inputBox" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email' />
-            <input type='password' className="inputBox" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter Password' />
-            <button className="appButton" onClick={handleLogin} type="button">Login</button>
+        <div className="container mt-5">
+            <div className="col-md-6 mx-auto">
+                <h1 className="text-center mb-4">Login</h1>
+                <div className="mb-3">
+                    <input
+                        type="email"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter Email"
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <input
+                        type="password"
+                        className="form-control"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter Password"
+                        required
+                    />
+                </div>
+                <button
+                    className="btn btn-primary w-100"
+                    onClick={handleLogin}
+                    type="button"
+                >
+                    Login
+                </button>
+            </div>
         </div >
     )
 }

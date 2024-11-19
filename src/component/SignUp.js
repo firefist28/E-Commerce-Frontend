@@ -38,18 +38,43 @@ const SignUp = () => {
     }
 
     return (
-        <div className="register">
-            <h1>Register</h1>
+        <div className="container mt-5">
+            <h1 className="text-center mb-4">Register</h1>
 
-            <div >
-                <input className="inputBox" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Name" />
-                <input className="inputBox" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="Enter Email" />
-                <input className="inputBox" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter Password" />
-                <button className="appButton" onClick={collectData} type="button">Sign Up</button>
+            <div className="col-md-6 mx-auto">
+                <div className="form-group mb-3">
+                    <input
+                        className="form-control"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter Name"
+                    />
+                </div>
 
+                <div className="form-group mb-3">
+                    <input
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        placeholder="Enter Email"
+                    />
+                </div>
+
+                <div className="form-group mb-3">
+                    <input
+                        className="form-control"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        type="password"
+                        placeholder="Enter Password"
+                    />
+                </div>
+
+                <button className="btn btn-primary w-100" onClick={collectData} type="button">Sign Up</button>
             </div>
-
-        </div >
+        </div>
     )
 }
 
