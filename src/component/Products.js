@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AxiosInstance from '../api/AxiosInstance';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Pagination } from 'react-bootstrap';
 
 const Products = () => {
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        getProducts();
-    }, [])
+    const [currentPage, setCurrentPage] = useState(1); // Current page
+    const [totalPages, setTotalPages] = useState(1); // Total pages
+    const [productsPerPage] = useState(5); // Products per page
 
-    const getProducts = async () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        getProducts(currentPage);
+    }, [currentPage])
+
+    const getProducts = async (page) => {
         try {
-            let results = await AxiosInstance.get('/getProducts');
+            let results = await AxiosInstance.get(`/getProducts?page=${page}&limit=${productsPerPage}`);
             console.warn('results from getProducts ' + results.data.data)
 
             setProducts(results.data.data);
+            setTotalPages(results.data.totalPages);
         } catch (error) {
             console.error('Error Fetching data ' + error);
         }
@@ -26,7 +33,7 @@ const Products = () => {
         try {
             await AxiosInstance.delete(`/product/${id}`);
             alert('Record Deleted');
-            getProducts();
+            getProducts(currentPage);
         } catch (error) {
             console.error('Error Fetching data ' + error);
         }
@@ -39,14 +46,19 @@ const Products = () => {
                 let results = await AxiosInstance.get(`/search/${key}`);
                 if (results.data) {
                     setProducts(results.data);
+                    setTotalPages(1); // Reset pagination during search
                 }
             } catch (error) {
                 console.error('Error Fetching data ' + error);
             }
         } else {
-            getProducts();
+            getProducts(currentPage);
         }
     }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div className="container mt-5">
@@ -78,7 +90,7 @@ const Products = () => {
                     <tbody>
                         {products.map((item, index) => (
                             <tr key={item._id}>
-                                <th scope="row">{index + 1}</th>
+                                <th scope="row">{(currentPage - 1) * productsPerPage + index + 1}</th>
                                 <td>{item.name}</td>
                                 <td>{item.price} INR</td>
                                 <td>{item.category}</td>
@@ -104,6 +116,27 @@ const Products = () => {
             ) : (
                 <h3 className="text-center">No Products Found</h3>
             )}
+
+            {/* Pagination */}
+            <Pagination className="justify-content-center mt-4">
+                <Pagination.Prev
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                />
+                {[...Array(totalPages)].map((_, index) => (
+                    <Pagination.Item
+                        key={index}
+                        active={index + 1 === currentPage}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </Pagination.Item>
+                ))}
+                <Pagination.Next
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                />
+            </Pagination>
         </div>
     );
 }
