@@ -46,24 +46,80 @@ const UpdateProduct = () => {
     }
 
     return (
-        < div className="register">
-            <h1>Update Product</h1>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="card shadow">
+                        <div className="card-header bg-primary text-white">
+                            <h4 className="text-center">Update Product</h4>
+                        </div>
+                        <div className="card-body">
+                            <form>
+                                {/* Product Name */}
+                                <div className="mb-3">
+                                    <label className="form-label">Product Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="Enter Product Name"
+                                    />
+                                </div>
 
-            <div >
-                <input className="inputBox" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Product Name" />
+                                {/* Product Price */}
+                                <div className="mb-3">
+                                    <label className="form-label">Price</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        placeholder="Enter Price"
+                                    />
+                                </div>
 
-                <input className="inputBox" value={price} onChange={(e) => setPrice(e.target.value)} type="text" placeholder="Enter Price" />
+                                {/* Product Category */}
+                                <div className="mb-3">
+                                    <label className="form-label">Category</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        placeholder="Enter Category"
+                                    />
+                                </div>
 
-                <input className="inputBox" value={category} onChange={(e) => setCategory(e.target.value)} type="text" placeholder="Enter Category" />
+                                {/* Product Company */}
+                                <div className="mb-3">
+                                    <label className="form-label">Company</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={company}
+                                        onChange={(e) => setCompany(e.target.value)}
+                                        placeholder="Enter Company"
+                                    />
+                                </div>
 
-                <input className="inputBox" value={company} onChange={(e) => setCompany(e.target.value)} type="text" placeholder="Enter Company" />
-
-                <button className="appButton" onClick={updateData} type="button">Update Product</button>
-
+                                {/* Update Button */}
+                                <div className="d-grid">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={updateData}
+                                    >
+                                        Update Product
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div >
-
-    )
+        </div>
+    );
 }
 
 export default UpdateProduct;
