@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import AxiosInstance from '../api/AxiosInstance';
+import useAxiosInstance from '../api/AxiosInstance';
 import { toast } from 'react-toastify';
 
 const UpdateProduct = () => {
@@ -14,6 +14,7 @@ const UpdateProduct = () => {
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     const navigate = useNavigate();
     const params = useParams();
+    const AxiosInstance = useAxiosInstance();
 
     useEffect(() => {
         getProductDetails();

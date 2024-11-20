@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AxiosInstance from '../api/AxiosInstance';
 import Products from './Products';
 import { toast } from 'react-toastify';
+import useAxiosInstance from '../api/AxiosInstance';
 
 const AddProduct = () => {
 
@@ -13,6 +13,7 @@ const AddProduct = () => {
     const [error, setError] = useState(false);
     const userId = JSON.parse(localStorage.getItem('user'))._id;
     const navigate = useNavigate();
+    const AxiosInstance = useAxiosInstance();
 
     const addData = async () => {
         if (!name || !price || !category || !company) {
