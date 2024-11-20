@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AxiosInstance from '../api/AxiosInstance';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Pagination } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import useAxiosInstance from '../api/AxiosInstance';
 
 const Products = () => {
+    const AxiosInstance = useAxiosInstance();
+
     const [currentPage, setCurrentPage] = useState(1); // Current page
     const [totalPages, setTotalPages] = useState(1); // Total pages
     const [productsPerPage] = useState(5); // Products per page
