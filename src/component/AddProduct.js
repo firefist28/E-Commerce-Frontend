@@ -22,7 +22,7 @@ const AddProduct = () => {
         }
 
         try {
-            let result = await AxiosInstance.post('/addProduct', { name, price, category, company, userId });
+            let result = await AxiosInstance.post('/api/product', { name, price, category, company, userId });
             console.warn(result);
 
             if (result) {

@@ -20,7 +20,7 @@ const Products = () => {
 
     const getProducts = async (page) => {
         try {
-            let results = await AxiosInstance.get(`/getProducts?page=${page}&limit=${productsPerPage}`);
+            let results = await AxiosInstance.get(`/api/product?page=${page}&limit=${productsPerPage}`);
             console.warn('results from getProducts ' + results.data.data)
 
             setProducts(results.data.data);
@@ -34,7 +34,7 @@ const Products = () => {
         console.warn('Product id ', id);
         //` is used for string interpolation to make id take the parameter value
         try {
-            await AxiosInstance.delete(`/product/${id}`);
+            await AxiosInstance.delete(`/api/product/${id}`);
             toast.success('Product Deleted!');
             getProducts(currentPage);
         } catch (error) {
@@ -47,7 +47,7 @@ const Products = () => {
         let key = event.target.value;
         if (key) {
             try {
-                let results = await AxiosInstance.get(`/search/${key}`);
+                let results = await AxiosInstance.get(`/api/product/search/${key}`);
                 if (results.data) {
                     setProducts(results.data);
                     setTotalPages(1); // Reset pagination during search
