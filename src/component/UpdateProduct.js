@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useAxiosInstance from '../api/AxiosInstance';
 import { toast } from 'react-toastify';
+import { API_PRODUCTS } from '../constants/ApiConstants';
+import { VALIDATION_ERRORS } from '../constants/MessageConstants';
 
 const UpdateProduct = () => {
 
@@ -22,7 +24,7 @@ const UpdateProduct = () => {
 
     const getProductDetails = async () => {
         try {
-            let result = await AxiosInstance.get(`/api/product/${params.id}`);
+            let result = await AxiosInstance.get(`${API_PRODUCTS}/${params.id}`);
             setName(result.data.name);
             setPrice(result.data.price);
             setCategory(result.data.category);
@@ -35,8 +37,13 @@ const UpdateProduct = () => {
 
     const updateData = async () => {
         console.warn(name, price, category, company);
+        if (!name || !price || !category || !company) {
+            setError(true);
+            return false;
+        }
+
         try {
-            let result = await AxiosInstance.put(`/api/product/${params.id}`, { name, price, category, company });
+            let result = await AxiosInstance.put(`${API_PRODUCTS}/${params.id}`, { name, price, category, company });
             if (result) {
                 toast.success('Product Updated Successfully!');
                 console.warn(result);
@@ -63,11 +70,12 @@ const UpdateProduct = () => {
                                     <label className="form-label">Product Name</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${error && !name ? "is-invalid" : ""}`}
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder="Enter Product Name"
                                     />
+                                    {error && !name && <div className="invalid-feedback">Name {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Price */}
@@ -75,11 +83,12 @@ const UpdateProduct = () => {
                                     <label className="form-label">Price</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${error && !price ? "is-invalid" : ""}`}
                                         value={price}
                                         onChange={(e) => setPrice(e.target.value)}
                                         placeholder="Enter Price"
                                     />
+                                    {error && !price && <div className="invalid-feedback">Price {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Category */}
@@ -87,11 +96,12 @@ const UpdateProduct = () => {
                                     <label className="form-label">Category</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${error && !category ? "is-invalid" : ""}`}
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
                                         placeholder="Enter Category"
                                     />
+                                    {error && !category && <div className="invalid-feedback">Category {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Company */}
@@ -99,11 +109,12 @@ const UpdateProduct = () => {
                                     <label className="form-label">Company</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${error && !company ? "is-invalid" : ""}`}
                                         value={company}
                                         onChange={(e) => setCompany(e.target.value)}
                                         placeholder="Enter Company"
                                     />
+                                    {error && !company && <div className="invalid-feedback">Company {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Update Button */}

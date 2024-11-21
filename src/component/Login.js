@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { API_USER_LOGIN } from '../constants/ApiConstants';
 
 const Login = () => {
 
@@ -16,7 +17,7 @@ const Login = () => {
     });
 
     const handleLogin = async () => {
-        let result = await fetch('http://localhost:5000/api/user/login', {
+        let result = await fetch(API_USER_LOGIN, {
             method: 'post',
             body: JSON.stringify({ email, password }),
             headers: {
