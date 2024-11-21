@@ -2,12 +2,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { SESSION_EXPIRE } from '../constants/MessageConstants';
+import { API_BASE_URL } from '../constants/ApiConstants';
 
 const useAxiosInstance = () => {
     const navigate = useNavigate();
 
     const AxiosInstance = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: API_BASE_URL
     });
 
     AxiosInstance.interceptors.request.use(
@@ -37,7 +39,7 @@ const useAxiosInstance = () => {
                 localStorage.removeItem('auth');
                 localStorage.removeItem('user');
                 navigate('/login');
-                toast.info('Your session has expired. Please log in again.');
+                toast.info(SESSION_EXPIRE);
             }
             return Promise.reject(error);
         }

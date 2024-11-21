@@ -47,9 +47,6 @@ const Nav = () => {
                                     <Link to="/add" className="nav-link">Add Product</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/profile" className="nav-link">Profile</Link>
-                                </li>
-                                <li className="nav-item">
                                     <Link
                                         onClick={logout}
                                         to="/login"

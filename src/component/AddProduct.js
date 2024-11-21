@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Products from './Products';
 import { toast } from 'react-toastify';
 import useAxiosInstance from '../api/AxiosInstance';
+import { API_PRODUCTS } from '../constants/ApiConstants';
+import { VALIDATION_ERRORS } from '../constants/MessageConstants';
 
 const AddProduct = () => {
 
@@ -22,7 +24,7 @@ const AddProduct = () => {
         }
 
         try {
-            let result = await AxiosInstance.post('/api/product', { name, price, category, company, userId });
+            let result = await AxiosInstance.post(API_PRODUCTS, { name, price, category, company, userId });
             console.warn(result);
 
             if (result) {
@@ -55,7 +57,7 @@ const AddProduct = () => {
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder="Enter Product Name"
                                     />
-                                    {error && !name && <div className="invalid-feedback">Name cannot be empty</div>}
+                                    {error && !name && <div className="invalid-feedback">Name {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Price */}
@@ -68,7 +70,7 @@ const AddProduct = () => {
                                         onChange={(e) => setPrice(e.target.value)}
                                         placeholder="Enter Price"
                                     />
-                                    {error && !price && <div className="invalid-feedback">Price cannot be empty</div>}
+                                    {error && !price && <div className="invalid-feedback">Price {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Category */}
@@ -81,7 +83,7 @@ const AddProduct = () => {
                                         onChange={(e) => setCategory(e.target.value)}
                                         placeholder="Enter Category"
                                     />
-                                    {error && !category && <div className="invalid-feedback">Category cannot be empty</div>}
+                                    {error && !category && <div className="invalid-feedback">Category {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Product Company */}
@@ -94,7 +96,7 @@ const AddProduct = () => {
                                         onChange={(e) => setCompany(e.target.value)}
                                         placeholder="Enter Company"
                                     />
-                                    {error && !company && <div className="invalid-feedback">Company Name cannot be empty</div>}
+                                    {error && !company && <div className="invalid-feedback">Company Name {VALIDATION_ERRORS.REQUIRED}</div>}
                                 </div>
 
                                 {/* Submit Button */}
