@@ -22,7 +22,7 @@ const UpdateProduct = () => {
 
     const getProductDetails = async () => {
         try {
-            let result = await AxiosInstance.get(`/product/${params.id}`);
+            let result = await AxiosInstance.get(`/api/product/${params.id}`);
             setName(result.data.name);
             setPrice(result.data.price);
             setCategory(result.data.category);
@@ -36,7 +36,7 @@ const UpdateProduct = () => {
     const updateData = async () => {
         console.warn(name, price, category, company);
         try {
-            let result = await AxiosInstance.put(`/updateProduct/${params.id}`, { name, price, category, company });
+            let result = await AxiosInstance.put(`/api/product/${params.id}`, { name, price, category, company });
             if (result) {
                 toast.success('Product Updated Successfully!');
                 console.warn(result);
