@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import luffyImage from '../resources/luffy.jpg';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
+import { logout } from '../states/actions/authAction';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { roles } from '../constants/enums';
+import { toast } from 'react-toastify';
 
 const Nav = () => {
 
-    const auth = localStorage.getItem('user');
-    const navigate = useNavigate();
-    const logout = () => {
+    //const auth = localStorage.getItem('user');
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state);
+
+    const buttonLogoutAction = () => {
         localStorage.clear();
-        navigate('/signUp');
+        dispatch(logout());
+        toast.info('Logout Successfully!');
     }
 
     return (
@@ -38,38 +43,45 @@ const Nav = () => {
                 {/* Navbar links */}
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
-                        {auth ? (
+                        {user ? (
                             <>
+                                {user.role === roles.ADMIN && (
+                                    <li className="nav-item">
+                                        <Link to="/add" className="nav-link">
+                                            Add Product
+                                        </Link>
+                                    </li>
+                                )}
+
                                 <li className="nav-item">
-                                    <Link to="/" className="nav-link">Products</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/add" className="nav-link">Add Product</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link
-                                        onClick={logout}
-                                        to="/login"
-                                        className="nav-link text-danger"
-                                    >
-                                        Logout ({JSON.parse(auth).name})
+                                    <Link to="/login" onClick={buttonLogoutAction} className="nav-link text-danger">
+                                        Logout {user.name}
                                     </Link>
                                 </li>
                             </>
                         ) : (
                             <>
                                 <li className="nav-item">
-                                    <Link to="/login" className="nav-link">Login</Link>
+                                    <Link to="/login" className="nav-link">
+                                        Login
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/signUp" className="nav-link">Sign Up</Link>
+                                    <Link to="/signUp" className="nav-link">
+                                        Register
+                                    </Link>
                                 </li>
                             </>
                         )}
+                        <li className="nav-item">
+                            <Link to="/about" className="nav-link">
+                                About
+                            </Link>
+                        </li>
                     </ul>
-                </div>
-            </div>
-        </nav>
+                </div >
+            </div >
+        </nav >
     )
 
     //<>...</> is a fragmentation for wrapping multiple items

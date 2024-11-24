@@ -12,10 +12,10 @@ const SignUp = () => {
 
     //This is for restricting user to navigate to signup if already signedup
     useEffect(() => {
-        const auth = localStorage.getItem('user');
-        if (auth) {
-            navigate('/');
-        }
+        //const auth = localStorage.getItem('user');
+        //if (auth) {
+        //    navigate('/');
+        //}
     });
 
     const collectData = async () => {
@@ -34,7 +34,7 @@ const SignUp = () => {
         if (result) {
             navigate('/');
             localStorage.setItem('auth', JSON.stringify(result.auth));
-            localStorage.setItem('user', JSON.stringify(result.user));
+            //localStorage.setItem('user', JSON.stringify(result.user));
         }
     }
 

@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { API_USER_LOGIN } from '../constants/ApiConstants';
+import { login } from '../states/actions/authAction';
 
 const Login = () => {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const auth = localStorage.getItem('user');
-        if (auth) {
-            navigate('/');
-        }
+        //const auth = localStorage.getItem('user');
+        //if (auth) {
+        //    navigate('/');
+        //}
     });
 
     const handleLogin = async () => {
@@ -28,10 +31,12 @@ const Login = () => {
         console.warn(result);
 
         if (result.auth) {
-            localStorage.setItem('user', JSON.stringify(result.user));
+            dispatch(login(result.user));
+            //navigate(result.user.role === roles.ADMIN ? '/add' : '/');
+            //localStorage.setItem('user', JSON.stringify(result.user));
             localStorage.setItem('auth', JSON.stringify(result.auth));
             toast.success('Welcome ' + result.user.name);
-            navigate('/');
+            navigate('/products');
         } else {
             toast.error('Email or password incorrect');
         }

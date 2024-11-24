@@ -13,7 +13,6 @@ const UpdateProduct = () => {
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
     const [error, setError] = useState(false);
-    const userId = JSON.parse(localStorage.getItem('user'))._id;
     const navigate = useNavigate();
     const params = useParams();
     const AxiosInstance = useAxiosInstance();

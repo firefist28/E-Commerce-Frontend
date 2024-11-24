@@ -5,34 +5,71 @@ import SignUp from './component/SignUp';
 import Login from './component/Login'
 import Products from './component/Products';
 import AddProduct from './component/AddProduct'
+import PageNotFound from './component/PageNotFound'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import PrivateComponent from './component/PrivateComponent';
 import UpdateProduct from './component/UpdateProduct';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { store, persistor } from './states/store';
+import Unauthorized from './component/Unauthorized';
+import { roles } from './constants/enums';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import PublicRoutes from './routes/PublicRoutes';
+import { About } from './component/About';
 
 function App() {
     return (
         <div className="App">
-            {/* this is required as ahref for link */}
-            <BrowserRouter>
-                <Nav />
-                <Routes>
-                    <Route element={<PrivateComponent />} >
-                        <Route path="/" element={<Products />} />
-                        <Route path="/add" element={<AddProduct />} />
-                        <Route path="/update/:id" element={<UpdateProduct />} />
-                        <Route path="/logout" element={<h1>Logout Component</h1>} />
-                    </Route>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <BrowserRouter>
+                        <Nav />
+                        <Routes>
+                            <Route element={<PublicRoutes />}>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/signUp" element={<SignUp />} />
+                                <Route path="/" element={<Login />} />
+                            </Route>
+                            <Route path="/unauthorized" element={<Unauthorized />} />
 
-                    <Route path="/signUp" element={<SignUp />} />
-                    <Route path="/login" element={<Login />} />
 
-                </Routes>
-            </BrowserRouter>
+                            {/* ProtectedRoutes */}
+                            <Route
+                                path="/products"
+                                element={
+                                    <ProtectedRoute roles={[roles.USER, roles.ADMIN]}>
+                                        <Products />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/add"
+                                element={
+                                    <ProtectedRoute roles={[roles.ADMIN]}>
+                                        <AddProduct />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/update/:id"
+                                element={
+                                    <ProtectedRoute roles={[roles.ADMIN]}>
+                                        <UpdateProduct />
+                                    </ProtectedRoute>
+                                }
+                            />
 
-            <ToastContainer position="top-right" />
-            <Footer />
+                            <Route path="/about" element={<About />} />
+                            <Route path="*" element={<PageNotFound />} />
+                        </Routes>
+                    </BrowserRouter>
+
+                    <ToastContainer position="top-right" />
+                    <Footer />
+                </PersistGate>
+            </Provider>
         </div>
     );
 }
