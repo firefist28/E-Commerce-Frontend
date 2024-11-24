@@ -5,6 +5,8 @@ import { Pagination } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import useAxiosInstance from '../api/AxiosInstance';
 import { API_PRODUCTS } from '../constants/ApiConstants';
+import { useSelector } from 'react-redux';
+import { roles } from '../constants/enums';
 
 const Products = () => {
     const AxiosInstance = useAxiosInstance();
@@ -14,6 +16,7 @@ const Products = () => {
     const [productsPerPage] = useState(5); // Products per page
 
     const [products, setProducts] = useState([]);
+    const { user } = useSelector((state) => state);
 
     useEffect(() => {
         getProducts(currentPage);
@@ -100,20 +103,28 @@ const Products = () => {
                                 <td>{item.price} INR</td>
                                 <td>{item.category}</td>
                                 <td>{item.company}</td>
-                                <td>
+                                {user.role === roles.ADMIN ? (
+                                    <td>
+                                        <button
+                                            className="btn btn-danger btn-sm me-2"
+                                            onClick={() => deleteProduct(item._id)}
+                                        >
+                                            Delete
+                                        </button>
+                                        <Link
+                                            to={'/update/' + item._id}
+                                            className="btn btn-primary btn-sm"
+                                        >
+                                            Update
+                                        </Link>
+                                    </td>
+                                ) : (
                                     <button
-                                        className="btn btn-danger btn-sm me-2"
-                                        onClick={() => deleteProduct(item._id)}
-                                    >
-                                        Delete
-                                    </button>
-                                    <Link
-                                        to={'/update/' + item._id}
                                         className="btn btn-primary btn-sm"
                                     >
-                                        Update
-                                    </Link>
-                                </td>
+                                        Add to Cart
+                                    </button>
+                                )}
                             </tr>
                         ))}
                     </tbody>

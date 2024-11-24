@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Products from './Products';
 import { toast } from 'react-toastify';
 import useAxiosInstance from '../api/AxiosInstance';
 import { API_PRODUCTS } from '../constants/ApiConstants';
@@ -13,9 +12,16 @@ const AddProduct = () => {
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
     const [error, setError] = useState(false);
-    const userId = JSON.parse(localStorage.getItem('user'))._id;
     const navigate = useNavigate();
     const AxiosInstance = useAxiosInstance();
+    //const { user } = useSelector((state) => state);
+
+    //useEffect(() => {
+    //    console.warn('role in addProduct -> ' + user.role);
+    //    if (!user.role.includes(roles.ADMIN)) {
+    //        navigate('/unauthorized');
+    //    }
+    //});
 
     const addData = async () => {
         if (!name || !price || !category || !company) {
@@ -24,7 +30,7 @@ const AddProduct = () => {
         }
 
         try {
-            let result = await AxiosInstance.post(API_PRODUCTS, { name, price, category, company, userId });
+            let result = await AxiosInstance.post(API_PRODUCTS, { name, price, category, company });
             console.warn(result);
 
             if (result) {

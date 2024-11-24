@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { SESSION_EXPIRE } from '../constants/MessageConstants';
 import { API_BASE_URL } from '../constants/ApiConstants';
@@ -37,7 +36,7 @@ const useAxiosInstance = () => {
             if (error.response && error.response.status === 401) {
                 console.warn('Token expired or invalid');
                 localStorage.removeItem('auth');
-                localStorage.removeItem('user');
+                //localStorage.removeItem('user');
                 navigate('/login');
                 toast.info(SESSION_EXPIRE);
             }
