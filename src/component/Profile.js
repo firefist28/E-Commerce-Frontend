@@ -1,11 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from 'react-redux';
 
 export const Profile = () => {
-    const user = {
-        name: "John Doe",
-        email: "johndoe@example.com"
-    };
+    const { user } = useSelector((state) => state);
 
     return (
         <div className="container mt-4">
