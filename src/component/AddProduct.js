@@ -14,14 +14,7 @@ const AddProduct = () => {
     const [error, setError] = useState(false);
     const navigate = useNavigate();
     const AxiosInstance = useAxiosInstance();
-    //const { user } = useSelector((state) => state);
-
-    //useEffect(() => {
-    //    console.warn('role in addProduct -> ' + user.role);
-    //    if (!user.role.includes(roles.ADMIN)) {
-    //        navigate('/unauthorized');
-    //    }
-    //});
+    const [isLoading, setIsLoading] = useState(false);
 
     const addData = async () => {
         if (!name || !price || !category || !company) {
@@ -30,6 +23,7 @@ const AddProduct = () => {
         }
 
         try {
+            setIsLoading(true);
             let result = await AxiosInstance.post(API_PRODUCTS, { name, price, category, company });
             console.warn(result);
 
@@ -37,10 +31,13 @@ const AddProduct = () => {
                 toast.success('Product Added Successfully!');
                 navigate('/');
             }
+            setIsLoading(false);
         } catch (error) {
             console.error('Error Fetching data ' + error);
             toast.error('Failed to add the Product. Please try again.');
+            setIsLoading(false);
         }
+
     }
 
     return (
@@ -111,8 +108,20 @@ const AddProduct = () => {
                                         type="button"
                                         className="btn btn-success"
                                         onClick={addData}
+                                        disabled={isLoading}
                                     >
-                                        Add Product
+                                        {isLoading ? (
+                                            <>
+                                                <span
+                                                    className="spinner-border spinner-border-sm"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                ></span>{' '}
+                                                Adding...
+                                            </>
+                                        ) : (
+                                            'Add'
+                                        )}
                                     </button>
                                 </div>
                             </form>

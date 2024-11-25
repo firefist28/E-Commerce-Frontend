@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -7,19 +7,14 @@ import { login } from '../states/actions/authAction';
 
 const Login = () => {
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        //const auth = localStorage.getItem('user');
-        //if (auth) {
-        //    navigate('/');
-        //}
-    });
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async () => {
+        setIsLoading(true);
         let result = await fetch(API_USER_LOGIN, {
             method: 'post',
             body: JSON.stringify({ email, password }),
@@ -32,14 +27,13 @@ const Login = () => {
 
         if (result.auth) {
             dispatch(login(result.user));
-            //navigate(result.user.role === roles.ADMIN ? '/add' : '/');
-            //localStorage.setItem('user', JSON.stringify(result.user));
             localStorage.setItem('auth', JSON.stringify(result.auth));
             toast.success('Welcome ' + result.user.name);
             navigate('/products');
         } else {
             toast.error('Email or password incorrect');
         }
+        setIsLoading(false);
     }
 
     return (
@@ -70,8 +64,20 @@ const Login = () => {
                     className="btn btn-primary w-100"
                     onClick={handleLogin}
                     type="button"
+                    disabled={isLoading}
                 >
-                    Login
+                    {isLoading ? (
+                        <>
+                            <span
+                                className="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>{' '}
+                            Logging in...
+                        </>
+                    ) : (
+                        'Login'
+                    )}
                 </button>
             </div>
         </div >
