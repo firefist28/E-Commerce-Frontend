@@ -12,7 +12,8 @@ const UpdateProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);;
     const navigate = useNavigate();
     const params = useParams();
     const AxiosInstance = useAxiosInstance();
@@ -41,6 +42,7 @@ const UpdateProduct = () => {
             return false;
         }
 
+        setIsLoading(true);
         try {
             let result = await AxiosInstance.put(`${API_PRODUCTS}/${params.id}`, { name, price, category, company });
             if (result) {
@@ -52,6 +54,7 @@ const UpdateProduct = () => {
             console.error('Error Fetching data ' + error);
             toast.error('Failed to update the Product. Please try again.');
         }
+        setIsLoading(false);
     }
 
     return (
@@ -123,7 +126,18 @@ const UpdateProduct = () => {
                                         className="btn btn-primary"
                                         onClick={updateData}
                                     >
-                                        Update Product
+                                        {isLoading ? (
+                                            <>
+                                                <span
+                                                    className="spinner-border spinner-border-sm"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                ></span>{' '}
+                                                Updating...
+                                            </>
+                                        ) : (
+                                            'Update'
+                                        )}
                                     </button>
                                 </div>
                             </form>
