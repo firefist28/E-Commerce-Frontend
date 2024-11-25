@@ -45,6 +45,11 @@ const Nav = () => {
                     <ul className="navbar-nav ms-auto">
                         {user ? (
                             <>
+                                <li className="nav-item">
+                                    <Link to="/" className="nav-link">
+                                        Home
+                                    </Link>
+                                </li>
                                 {user.role === roles.ADMIN && (
                                     <li className="nav-item">
                                         <Link to="/add" className="nav-link">
@@ -52,6 +57,11 @@ const Nav = () => {
                                         </Link>
                                     </li>
                                 )}
+                                <li className="nav-item">
+                                    <Link to="/myProfile" className="nav-link">
+                                        My Profile
+                                    </Link>
+                                </li>
 
                                 <li className="nav-item">
                                     <Link to="/login" onClick={buttonLogoutAction} className="nav-link text-danger">

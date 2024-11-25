@@ -18,6 +18,7 @@ import { roles } from './constants/enums';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import PublicRoutes from './routes/PublicRoutes';
 import { About } from './component/About';
+import { Profile } from './component/Profile';
 
 function App() {
     return (
@@ -30,17 +31,27 @@ function App() {
                             <Route element={<PublicRoutes />}>
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/signUp" element={<SignUp />} />
-                                <Route path="/" element={<Login />} />
                             </Route>
                             <Route path="/unauthorized" element={<Unauthorized />} />
 
 
                             {/* ProtectedRoutes */}
+                            {['/products', '/'].map((path) => (
+                                <Route
+                                    key={path}
+                                    path={path}
+                                    element={
+                                        <ProtectedRoute roles={[roles.USER, roles.ADMIN]}>
+                                            <Products />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                            ))}
                             <Route
-                                path="/products"
+                                path="/myProfile"
                                 element={
                                     <ProtectedRoute roles={[roles.USER, roles.ADMIN]}>
-                                        <Products />
+                                        <Profile />
                                     </ProtectedRoute>
                                 }
                             />
