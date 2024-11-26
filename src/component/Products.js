@@ -16,7 +16,7 @@ const Products = () => {
     const [productsPerPage] = useState(5); // Products per page
 
     const [products, setProducts] = useState([]);
-    const { user } = useSelector((state) => state);
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
         getProducts(currentPage);

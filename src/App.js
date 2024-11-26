@@ -19,6 +19,7 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import PublicRoutes from './routes/PublicRoutes';
 import { About } from './component/About';
 import { Profile } from './component/Profile';
+import { Cart } from './component/Cart';
 
 function App() {
     return (
@@ -60,6 +61,14 @@ function App() {
                                 element={
                                     <ProtectedRoute roles={[roles.ADMIN]}>
                                         <AddProduct />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/cart/:id"
+                                element={
+                                    <ProtectedRoute roles={[roles.USER]}>
+                                        <Cart />
                                     </ProtectedRoute>
                                 }
                             />

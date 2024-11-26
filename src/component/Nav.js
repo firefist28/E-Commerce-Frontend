@@ -9,9 +9,8 @@ import { toast } from 'react-toastify';
 
 const Nav = () => {
 
-    //const auth = localStorage.getItem('user');
     const dispatch = useDispatch();
-    const { user } = useSelector((state) => state);
+    const user = useSelector(state => state.user);
 
     const buttonLogoutAction = () => {
         localStorage.clear();
