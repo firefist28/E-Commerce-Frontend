@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosInstance from '../api/AxiosInstance';
 import { API_CART } from '../constants/ApiConstants';
+import useCartService from '../services/cartServices';
+import { useSelector } from 'react-redux';
 
 export const Cart = () => {
     const params = useParams();
     const AxiosInstance = useAxiosInstance();
     const [cartValues, setCartValues] = useState(null);
+    const user = useSelector(state => state.user);
+    const CartService = useCartService();
 
     useEffect(() => {
         getCart();
@@ -22,23 +26,15 @@ export const Cart = () => {
     };
 
     // Increase quantity of an item
-    const increaseQuantity = (itemId) => {
-        const updatedItems = cartValues.items.map((item) =>
-            item._id === itemId
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-        );
-        setCartValues({ ...cartValues, items: updatedItems });
+    const increaseQuantity = async (productId) => {
+        await CartService.updateProductToCart(productId, user._id, 1);
+        await getCart();
     };
 
     // Decrease quantity of an item
-    const decreaseQuantity = (itemId) => {
-        const updatedItems = cartValues.items.map((item) =>
-            item._id === itemId && item.quantity > 1
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-        );
-        setCartValues({ ...cartValues, items: updatedItems });
+    const decreaseQuantity = async (productId) => {
+        await CartService.updateProductToCart(productId, user._id, -1);
+        await getCart();
     };
 
     // Remove an item from the cart
@@ -82,14 +78,14 @@ export const Cart = () => {
                                             <div className="d-flex align-items-center">
                                                 <button
                                                     className="btn btn-sm btn-outline-primary me-2"
-                                                    onClick={() => decreaseQuantity(item._id)}
+                                                    onClick={() => decreaseQuantity(item.productId._id)}
                                                 >
                                                     -
                                                 </button>
                                                 <span>{quantity}</span>
                                                 <button
                                                     className="btn btn-sm btn-outline-primary ms-2"
-                                                    onClick={() => increaseQuantity(item._id)}
+                                                    onClick={() => increaseQuantity(item.productId._id)}
                                                 >
                                                     +
                                                 </button>
