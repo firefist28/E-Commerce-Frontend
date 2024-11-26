@@ -7,9 +7,11 @@ import useAxiosInstance from '../api/AxiosInstance';
 import { API_PRODUCTS } from '../constants/ApiConstants';
 import { useSelector } from 'react-redux';
 import { roles } from '../constants/enums';
+import useCartService from '../services/cartServices';
 
 const Products = () => {
     const AxiosInstance = useAxiosInstance();
+    const CartService = useCartService();
 
     const [currentPage, setCurrentPage] = useState(1); // Current page
     const [totalPages, setTotalPages] = useState(1); // Total pages
@@ -121,6 +123,7 @@ const Products = () => {
                                 ) : (
                                     <button
                                         className="btn btn-primary btn-sm"
+                                        onClick={() => CartService.addProductToCart(item._id, user._id)}
                                     >
                                         Add to Cart
                                     </button>
@@ -131,7 +134,8 @@ const Products = () => {
                 </table>
             ) : (
                 <h3 className="text-center">No Products Found</h3>
-            )}
+            )
+            }
 
             {/* Pagination */}
             <Pagination className="justify-content-center mt-4">
@@ -153,7 +157,7 @@ const Products = () => {
                     disabled={currentPage === totalPages}
                 />
             </Pagination>
-        </div>
+        </div >
     );
 }
 export default Products;
