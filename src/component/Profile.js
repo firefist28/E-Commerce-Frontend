@@ -1,9 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 export const Profile = () => {
-    const { user } = useSelector((state) => state);
+    const user = useSelector(state => state.user);
+    const navigate = useNavigate();
 
     return (
         <div className="container mt-4">
@@ -27,7 +29,7 @@ export const Profile = () => {
                         </button>
                         <button
                             className="btn btn-outline-success"
-                            onClick={() => alert("View Cart")}
+                            onClick={() => navigate(`/cart/${user._id}`)}
                         >
                             My Cart
                         </button>

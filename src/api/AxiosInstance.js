@@ -19,7 +19,6 @@ const useAxiosInstance = () => {
                 // Removing double quotes from token if present
                 token = token.replace(/^"|"$/g, '');
                 config.headers.Authorization = `Bearer ${token}`;
-                console.warn('auth ' + token);
             }
             return config;
         },
