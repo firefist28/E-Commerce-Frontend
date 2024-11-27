@@ -95,7 +95,7 @@ function App() {
                         </Routes>
                     </BrowserRouter>
 
-                    <ToastContainer position="top-right" />
+                    <ToastContainer position="bottom-right" />
                     <Footer />
                 </PersistGate>
             </Provider>
