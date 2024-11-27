@@ -7,3 +7,5 @@ export const API_PRODUCTS = API_BASE_URL + "/product";
 export const API_PRODUCT_SEARCH = API_PRODUCTS + "/search";
 
 export const API_CART = API_BASE_URL + "/cart";
+
+export const API_ORDER = API_BASE_URL + "/order";
