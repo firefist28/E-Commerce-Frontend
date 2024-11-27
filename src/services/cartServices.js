@@ -33,7 +33,20 @@ const useCartService = () => {
         }
     }
 
-    return { addProductToCart, updateProductToCart };
+    const removeItemfromCart = async (itemId, userId) => {
+        try {
+            const payload = { itemId, userId };
+            let result = await AxiosInstance.post(`${API_CART}/remove`, payload);
+            if (result) {
+                toast.success('Product Removed Successfully!');
+            }
+        } catch (error) {
+            console.error('Error Fetching data ' + error);
+            toast.error('Failed to Update Cart. Please try again');
+        }
+    }
+
+    return { addProductToCart, updateProductToCart, removeItemfromCart };
 }
 
 export default useCartService;

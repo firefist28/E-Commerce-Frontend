@@ -38,9 +38,9 @@ export const Cart = () => {
     };
 
     // Remove an item from the cart
-    const removeItem = (itemId) => {
-        const updatedItems = cartValues.items.filter((item) => item._id !== itemId);
-        setCartValues({ ...cartValues, items: updatedItems });
+    const removeItem = async (itemId) => {
+        await CartService.removeItemfromCart(itemId, user._id);
+        await getCart();
     };
 
     // Calculate total price
