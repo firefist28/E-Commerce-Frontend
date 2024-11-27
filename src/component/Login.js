@@ -26,7 +26,19 @@ const Login = () => {
         console.warn(result);
 
         if (result.auth) {
-            dispatch(login(result.user));
+            const loginTime = new Date().getTime();
+            //loginTime + 2 * 60 * 1000); for 2 mins
+            //2 hour; loginTime + 60 * 60 * 2 * 1000
+            const sessionExpiryTime = loginTime + 60 * 60 * 2 * 1000
+
+            // Modifying the user object
+            const user = {
+                ...result.user,
+                loginTime,
+                sessionExpiryTime,
+            };
+
+            dispatch(login(user));
             localStorage.setItem('auth', JSON.stringify(result.auth));
             toast.success('Welcome ' + result.user.name);
             navigate('/products');
