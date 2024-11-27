@@ -11,6 +11,7 @@ export const Cart = () => {
     const [cartValues, setCartValues] = useState(null);
     const user = useSelector(state => state.user);
     const CartService = useCartService();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         getCart();
@@ -39,8 +40,10 @@ export const Cart = () => {
 
     // Remove an item from the cart
     const removeItem = async (itemId) => {
+        setIsLoading(true);
         await CartService.removeItemfromCart(itemId, user._id);
         await getCart();
+        await setIsLoading(false);
     };
 
     // Calculate total price
@@ -96,8 +99,20 @@ export const Cart = () => {
                                             <button
                                                 className="btn btn-sm btn-danger"
                                                 onClick={() => removeItem(item._id)}
+                                                disabled={isLoading}
                                             >
-                                                Remove
+                                                {isLoading ? (
+                                                    <>
+                                                        <span
+                                                            className="spinner-border spinner-border-sm"
+                                                            role="status"
+                                                            aria-hidden="true"
+                                                        ></span>{' '}
+                                                        Removing...
+                                                    </>
+                                                ) : (
+                                                    'Remove'
+                                                )}
                                             </button>
                                         </td>
                                     </tr>
