@@ -23,7 +23,7 @@ export const Profile = () => {
                     <div className="d-flex justify-content-between">
                         <button
                             className="btn btn-outline-primary"
-                            onClick={() => alert("View Orders")}
+                            onClick={() => navigate(`/order/${user._id}`)}
                         >
                             My Orders
                         </button>

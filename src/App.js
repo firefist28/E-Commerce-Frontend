@@ -18,6 +18,7 @@ import { roles } from './constants/enums';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import PublicRoutes from './routes/PublicRoutes';
 import { About } from './component/About';
+import { Order } from './component/Order';
 import { Profile } from './component/Profile';
 import { Cart } from './component/Cart';
 
@@ -69,6 +70,14 @@ function App() {
                                 element={
                                     <ProtectedRoute roles={[roles.USER]}>
                                         <Cart />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/order/:id"
+                                element={
+                                    <ProtectedRoute roles={[roles.USER]}>
+                                        <Order />
                                     </ProtectedRoute>
                                 }
                             />
