@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useAxiosInstance from '../api/AxiosInstance';
 import { API_CART } from '../constants/ApiConstants';
 import useCartService from '../services/cartServices';
+import useOrderService from '../services/orderServices';
 import { useSelector } from 'react-redux';
 
 export const Cart = () => {
@@ -12,6 +13,7 @@ export const Cart = () => {
     const user = useSelector(state => state.user);
     const CartService = useCartService();
     const [isLoading, setIsLoading] = useState(false);
+    const OrderService = useOrderService();
 
     useEffect(() => {
         getCart();
@@ -43,6 +45,16 @@ export const Cart = () => {
         setIsLoading(true);
         await CartService.removeItemfromCart(itemId, user._id);
         await getCart();
+        await setIsLoading(false);
+    };
+
+    // Decrease quantity of an item
+    const createOrder = async (userId, totalAmount) => {
+        setIsLoading(true);
+        const result = await OrderService.createOrder(userId, totalAmount);
+        //emptying cart after order
+        if (result)
+            setCartValues(null);
         await setIsLoading(false);
     };
 
@@ -124,8 +136,21 @@ export const Cart = () => {
                         <h4>Total Price: INR {calculateTotal}</h4>
                         <button
                             className="btn btn-success"
+                            onClick={() => createOrder(user._id, calculateTotal)}
+                            disabled={isLoading}
                         >
-                            Purchase
+                            {isLoading ? (
+                                <>
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>{' '}
+                                    Processing...
+                                </>
+                            ) : (
+                                'Purchase'
+                            )}
                         </button>
                     </div>
                 </>
