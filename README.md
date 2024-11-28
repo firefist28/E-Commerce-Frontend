@@ -13,7 +13,7 @@ Key Features:
 - Pagination for product listing.
 - Protected routes for authorized access.
 
-This scalable and responsive platform provides a strong foundation for further enhancements like payment gateway integration and advanced analytics
+This scalable and responsive platform provides a strong foundation for further enhancements.
 
 Getting Started
 Follow these steps to set up and run the project locally:
