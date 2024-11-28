@@ -9,6 +9,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     //This is for restricting user to navigate to signup if already signedup
     useEffect(() => {
@@ -63,14 +64,23 @@ const SignUp = () => {
                     />
                 </div>
 
-                <div className="form-group mb-3">
+                <div className="mb-3 position-relative">
                     <input
+                        type={isPasswordVisible ? 'text' : 'password'}
                         className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        type="password"
                         placeholder="Enter Password"
+                        required
                     />
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary position-absolute end-0 top-0 mt-2 me-2"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        style={{ border: 'none', background: 'none' }}
+                    >
+                        {isPasswordVisible ? 'Hide' : 'Show'}
+                    </button>
                 </div>
 
                 <button className="btn btn-primary w-100" onClick={collectData} type="button">Sign Up</button>

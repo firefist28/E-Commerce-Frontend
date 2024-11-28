@@ -12,6 +12,7 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const handleLogin = async () => {
         setIsLoading(true);
@@ -62,15 +63,23 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div className="mb-3">
+                <div className="mb-3 position-relative">
                     <input
-                        type="password"
+                        type={isPasswordVisible ? 'text' : 'password'}
                         className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Password"
                         required
                     />
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary position-absolute end-0 top-0 mt-2 me-2"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        style={{ border: 'none', background: 'none' }}
+                    >
+                        {isPasswordVisible ? 'Hide' : 'Show'}
+                    </button>
                 </div>
                 <button
                     className="btn btn-primary w-100"
