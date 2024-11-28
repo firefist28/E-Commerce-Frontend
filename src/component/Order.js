@@ -42,7 +42,7 @@ export const Order = ({ userId }) => {
                                 <strong>Order Date:</strong> {new Date(order.orderDate).toLocaleDateString()}
                             </p>
                             <p>
-                                <strong>Total Amount:</strong> ${order.totalAmount}
+                                <strong>Total Amount:</strong> INR {order.totalAmount}
                             </p>
                             <h6>Items:</h6>
                             <ul className="list-group list-group-flush">
