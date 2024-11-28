@@ -20,20 +20,22 @@ export const Profile = () => {
                     <p className="mb-4">
                         <strong>Email:</strong> {user.email}
                     </p>
-                    <div className="d-flex justify-content-between">
-                        <button
-                            className="btn btn-outline-primary"
-                            onClick={() => navigate(`/order/${user._id}`)}
-                        >
-                            My Orders
-                        </button>
-                        <button
-                            className="btn btn-outline-success"
-                            onClick={() => navigate(`/cart/${user._id}`)}
-                        >
-                            My Cart
-                        </button>
-                    </div>
+                    {user.role === 'user' ? (
+                        <div className="d-flex justify-content-between">
+                            <button
+                                className="btn btn-outline-primary"
+                                onClick={() => navigate(`/order/${user._id}`)}
+                            >
+                                My Orders
+                            </button>
+                            <button
+                                className="btn btn-outline-success"
+                                onClick={() => navigate(`/cart/${user._id}`)}
+                            >
+                                My Cart
+                            </button>
+                        </div>
+                    ) : (<></>)}
                 </div>
             </div>
         </div>
