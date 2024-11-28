@@ -1,6 +1,19 @@
 # E-Commerce-Frontend
-A responsive and user-friendly e-commerce frontend built with React.
-Note: This project is currently under active development with ongoing updates for further improvements and completion.
+This project is a modern e-commerce platform built using React, Node.js, and MongoDB, designed for an intuitive and secure shopping experience. It includes:
+
+- Frontend: Built with React, styled using Bootstrap, and Redux for role-based access control (RBAC). Features include user authentication, product search, pagination, cart management, and order placement.
+- Backend: Express.js APIs with middleware for token validation and role authorization. Incorporates session expiry management and robust error handling.
+- Database: MongoDB with models for users, products, cart, and orders.
+
+Key Features:
+- User authentication with JWT.
+- Role-based access control for admin and user functionalities.
+- Axios interceptors for secure API calls.
+- Toast notifications for alerts.
+- Pagination for product listing.
+- Protected routes for authorized access.
+
+This scalable and responsive platform provides a strong foundation for further enhancements like payment gateway integration and advanced analytics
 
 Getting Started
 Follow these steps to set up and run the project locally:
