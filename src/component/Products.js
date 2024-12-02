@@ -121,12 +121,14 @@ const Products = () => {
                                         </Link>
                                     </td>
                                 ) : (
-                                    <button
-                                        className="btn btn-primary btn-sm"
-                                        onClick={() => CartService.addProductToCart(item._id, user._id)}
-                                    >
-                                        Add to Cart
-                                    </button>
+                                    <td>
+                                        <button
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => CartService.addProductToCart(item._id, user._id)}
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </td>
                                 )}
                             </tr>
                         ))}
